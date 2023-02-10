@@ -1,46 +1,68 @@
-import { Component } from '@angular/core'; 
-
+import { Component } from '@angular/core';
+import { ApiServiceService } from './../api-service.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js';
+interface User {
+  user_id: number,
+  userName: string,
+  email: string
+}
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css'],
 })
 export class UsersComponent {
+  Users: any;
+  editUser: any;
+  constructor(private userServices: ApiServiceService) {
 
-  Users : any[] = [
-    {
-        "user_id": "2",
-        "name": "Tesing",
-        "email": "fudti@mailinator.com2",
-        "password": "$2y$10$ilmi17dbSqP5QCclyDICfeUKLeOnMJWRpjsljFuk8jwop0XwWUyTi"
-    },
-    {
-        "user_id": "3",
-        "name": "Tamara Barker",
-        "email": "rimotyp@mailinator.com",
-        "password": "$2y$10$PcFbTIKSgsGx8ic/S1w6wOdB6oDF.W1NqkhhcLiG1eeL90CinRqPq"
-    },
-    {
-        "user_id": "6",
-        "name": "Adnan",
-        "email": "mail@gmail.com",
-        "password": "123123"
-    },
-    {
-        "user_id": "7",
-        "name": "Adnan",
-        "email": "mail1@gmail.com",
-        "password": "$2y$10$Amay2LcM4aFW/CBg1IteDeQGMHGUKsv1X/nL5dUsB4ZxZNUR/ijqe"
-    }
-];
-editUser:any;
-  constructor( 
-  ){}
-  ngOnInit(){
-   
+    this.userServices.getUsers().subscribe(
+      (res) => { 
+        
+        this.Users  = res; 
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+    console.log(this.Users);
   }
-  handleUpdate(user : any){
-    console.log(user);
+  ngOnInit() {}
+  handleEdit(user:any){
     this.editUser = user;
   }
+  handleDelete(user:any){
+    console.log(user);
+     
+    this.userServices.deleteUsers(user).subscribe(
+      (res) => {
+        console.log(res);
+        if (res.status === true) {
+          console.log(res);
+          Swal.fire('Deleted', res.message, 'success');
+        }
+      },
+      (error) => {
+        console.log('Error: ', error.error);
+        Swal.fire('', error.error.message, 'info');
+      }
+    );  
+  }
+  handleUpdate() {
+    console.log('Clicked');
+    this.userServices.updateUsers(this.editUser).subscribe(
+      (res) => {
+        console.log(res);
+        if (res.status === true) {
+          console.log(res);
+          Swal.fire('Updated', res.message, 'success');
+        }
+      },
+      (error) => {
+        console.log('Error: ', error.error);
+        Swal.fire('', error.error.message, 'info');
+      }
+    ); 
+  }
+  
 }

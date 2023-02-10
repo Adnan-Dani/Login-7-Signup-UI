@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormGroup, FormsModule } from '@angular/forms';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,7 +14,7 @@ import { ApiServiceService } from './api-service.service';
 
 const appRoute: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'login', component: LoginComponent },
+  { path: 'login',  component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'users', component: UsersComponent },
 ];
@@ -25,6 +26,7 @@ const appRoute: Routes = [
     AppRoutingModule,
     HttpClientModule,
     RouterModule.forRoot(appRoute),
+    SweetAlert2Module.forRoot()
   ],
   providers: [ApiServiceService],
   bootstrap: [AppComponent],

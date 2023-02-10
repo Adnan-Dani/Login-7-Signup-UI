@@ -53,7 +53,6 @@
                   class="form-control"
                   id="name"
                   name="name"
-                  value="{{editUser? editUser.name : ''}}"
                   placeholder="Faizan"
                   required
                 />
@@ -65,6 +64,7 @@
                   class="form-control"
                   id="email"
                   name="email"
+                   
                   value="{{editUser? editUser.email : ''}}"
                   required
                 />
@@ -78,7 +78,7 @@
               >
                 Close
               </button>
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" (click)="handleUpdate()" class="btn btn-primary">
                 Save changes
               </button>
             </div>
@@ -100,7 +100,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let user of Users">
-              <th scope="row">{{user.id}}</th>
+              <th scope="row">{{user.user_id}}</th>
               <td>{{user.name}}</td>
               <td>{{user.email}}</td>
               <td>
@@ -108,11 +108,11 @@
                    class="btn btn-success  mx-2"
                   data-bs-toggle="modal"
                   data-bs-target="#exampleModal"
-                  (click)="handleUpdate(user)"
+                  (click)="handleEdit(user)"
                 >
                   <i class="fa-solid fa-pen-to-square"></i>
                 </button>
-                <button class="btn btn-danger">
+                <button class="btn btn-danger" (click)="handleDelete(user.user_id)">
                   <i class="fa-regular fa-trash-can"></i>
                 </button>
               </td>

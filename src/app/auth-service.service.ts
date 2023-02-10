@@ -6,12 +6,16 @@ import { Observable } from 'rxjs';
 })
 export class ApiServiceService {
   private BASE_URL : string = 'http://localhost:8080/api/';
-
+  isLoggedIn: boolean = false;
   constructor( private httpClient: HttpClient ) { }
 
   
   login(data:any):Observable<any>{
     console.log(data);
     return this.httpClient.post(this.BASE_URL+'auth',data);
+  }
+  signup(data:any):Observable<any>{
+    console.log(data);
+    return this.httpClient.post(this.BASE_URL+'register',data);
   }
 }
